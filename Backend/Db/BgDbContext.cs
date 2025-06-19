@@ -25,6 +25,7 @@ namespace Backend.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
+            /*
 
 #if DEBUG
             var cnn = ConnectionsString["test"];
@@ -36,6 +37,9 @@ namespace Backend.Db
                 var pw = Secrets.GetPw();
                 cnn = cnn.Replace("{pw}", pw);
             }
+            */
+            
+            var cnn = VankosoftConnectionString.ConnectionString();
             options.UseSqlServer(cnn);
             // options.LogTo(Console.WriteLine);
         }

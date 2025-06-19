@@ -7,26 +7,31 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Backend.Migrations
 {
     [DbContext(typeof(BgDbContext))]
-    [Migration("20210606080009_showphoto")]
-    partial class showphoto
+    [Migration("20250619144309_InitialCreate")]
+    partial class InitialCreate
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Backend.Db.ErrorReport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Error")
                         .HasColumnType("nvarchar(max)");
@@ -44,13 +49,37 @@ namespace Backend.Migrations
                     b.ToTable("ErrorReports");
                 });
 
+            modelBuilder.Entity("Backend.Db.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("PostTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Feedback");
+                });
+
             modelBuilder.Entity("Backend.Db.Game", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Started")
+                    b.Property<DateTime>("UtcStarted")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Winner")
@@ -65,8 +94,9 @@ namespace Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("On")
                         .HasColumnType("bit");
@@ -83,8 +113,9 @@ namespace Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("MessageType")
                         .HasColumnType("int");
@@ -167,8 +198,17 @@ namespace Backend.Migrations
                     b.Property<DateTime>("LastFreeGold")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("LocalLogin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MuteIntro")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PassHash")
+                        .HasColumnType("int");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -203,6 +243,15 @@ namespace Backend.Migrations
                         .HasForeignKey("ReporterId");
 
                     b.Navigation("Reporter");
+                });
+
+            modelBuilder.Entity("Backend.Db.Feedback", b =>
+                {
+                    b.HasOne("Backend.Db.User", "Sender")
+                        .WithMany("SentFeedback")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Backend.Db.Message", b =>
@@ -245,6 +294,8 @@ namespace Backend.Migrations
                     b.Navigation("Players");
 
                     b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentFeedback");
 
                     b.Navigation("SentMessages");
                 });
