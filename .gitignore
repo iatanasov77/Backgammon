@@ -346,3 +346,11 @@ healthchecksdb
 *.bin
 /FibsIntegration/fibspw.txt
 .DS_Store*
+
+
+###> Vankosoft Files ###
+/.buildpath
+/.project
+/.settings
+###< Vankosoft Files ###
+
