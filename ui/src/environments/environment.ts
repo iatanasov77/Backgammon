@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  socketServiceUrl: 'wss://localhost:5001/ws',
-  chatServiceUrl: 'wss://localhost:5001/ws/chat',
-  apiServiceUrl: 'https://localhost:5001/api'
+  socketServiceUrl: 'wss://api.backgammon.lh:5001/ws',
+  chatServiceUrl: 'wss://api.backgammon.lh:5001/ws/chat',
+  apiServiceUrl: 'https://api.backgammon.lh:5001/api'
 
   // port 44394 for visual studio
 };
