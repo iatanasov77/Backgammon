@@ -1,9 +1,26 @@
 # Backgammon
 
 ## VankoSoft - Build Backend
+- Create Some User Records in Database
+```
+sqlcmd -S localhost -U SA -P 'Ophthalamia@123' -d Backgammon -Q "INSERT INTO Users (Id, Name, ShowPhoto, Elo, GameCount, Admin, EmailNotifications, EmailUnsubscribeId, Gold, LastFreeGold, PassHash, MuteIntro) VALUES ('ECC9A1FC-3E5C-45E6-BCE3-7C24DFE82A99', 'Admin', 'FALSE', 0, 0, 'TRUE', 'FALSE', 'ECC9A1FC-3E5C-45E6-BCE3-7C24DFE82A99', 0, GETDATE(), 0, 'FALSE')"
+sqlcmd -S localhost -U SA -P 'Ophthalamia@123' -d Backgammon -Q "INSERT INTO Users (Id, Name, ShowPhoto, Elo, GameCount, Admin, EmailNotifications, EmailUnsubscribeId, Gold, LastFreeGold, PassHash, MuteIntro) VALUES ('FB5046FE-DE10-48A7-901E-E5E95251E996', 'Game', 'FALSE', 0, 0, 'FALSE', 'FALSE', 'ECC9A1FC-3E5C-45E6-BCE3-7C24DFE82A99', 0, GETDATE(), 0, 'FALSE')"
+sqlcmd -S localhost -U SA -P 'Ophthalamia@123' -d Backgammon -Q "INSERT INTO Users (Id, Name, ShowPhoto, Elo, GameCount, Admin, EmailNotifications, EmailUnsubscribeId, Gold, LastFreeGold, PassHash, MuteIntro) VALUES ('ECC9A1FC-3E5C-45E6-BCE3-7C24DFE82C98', 'Aina', 'FALSE', 0, 0, 'FALSE', 'FALSE', 'ECC9A1FC-3E5C-45E6-BCE3-7C24DFE82A99', 0, GETDATE(), 0, 'FALSE')"
+```
 
-- dotnet publish -c Debug -o /srv/Backgammon/
-- sudo service BackgammonBackend restart
+- Build Frontend from ui Directory Run:
+```
+yarn install --no-bin-links
+yarn run build
+```
+
+- Build and Publish Backend
+```
+dotnet publish -c Debug -o /srv/Backgammon/
+sudo service BackgammonBackend restart
+```
+
+- Create a file pw.txt with Database Root Password and copy the file into /srv/Backgammon
 
 Online game player vs player.
 
