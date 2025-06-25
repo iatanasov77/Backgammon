@@ -23,7 +23,8 @@ export class LoginButtonsComponent implements AfterViewInit {
   show = false;
 
   ngAfterViewInit(): void {
-    this.initGoogle();
+    console.log('Google Button is Removed !');
+    //this.initGoogle();
   }
 
   initGoogle() {
