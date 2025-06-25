@@ -1,5 +1,10 @@
 # Backgammon
 
+## VankoSoft - Build Backend
+
+- dotnet publish -c Debug -o /srv/Backgammon/
+- sudo service BackgammonBackend restart
+
 Online game player vs player.
 
 [Codeproject article](https://www.codeproject.com/Articles/5297405/Online-Backgammon)
