@@ -150,7 +150,7 @@ namespace Backend.Controllers
                     user.SocialProvider.Equals(userDto.socialProvider) &&
                     user.ProviderId.Equals(userDto.socialProviderId) &&
                     userDto.socialProviderId != null
-                    );
+                );
 
                 // todo: is this safe or should email be checked instead or also?
                 if (dbUser != null)
