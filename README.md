@@ -28,6 +28,14 @@ sqlcmd -S localhost -U SA -P 'RootPassword' -Q "BACKUP DATABASE [Backgammon] TO 
 sudo mv /var/DotNetBackup/Backgammon.bac /dropbox-files/databases/Backgammon.bac
 ```
 
+- Restore Database From Backup
+```
+cp /dropbox-files/databases/Backgammon.bac /var/DotNetBackup/Backgammon.bac
+sqlcmd -S localhost -U SA -P 'RootPassword' -Q "DROP DATABASE Backgammon"
+sqlcmd -S localhost -U SA -P 'RootPassword' -Q "RESTORE DATABASE [Backgammon] FROM DISK='/var/DotNetBackup/Backgammon.bac'"
+sudo rm /var/DotNetBackup/Backgammon.bac
+```
+
 - Check Websocket Connections
 ```
 telsocket -url wss://api.backgammon.lh:5001/ws/game
